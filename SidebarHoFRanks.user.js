@@ -165,7 +165,6 @@ Refresh (h): <input id="refresh" class="shofr_input" type="text">
 function getData(callback) {
     $.getJSON(`https://api.torn.com/user/?selections=hof&key=${hofranks.apikey}`, (data) => {
         callback(data.halloffame);
-        alert("API call made");
     });
 }
 
