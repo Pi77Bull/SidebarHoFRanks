@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Sidebar HoF Ranks
-// @version      0.2.1
+// @version      0.2
 // @description  Displays all Hall of Fame Ranks in the Sidebar.
 // @author       Pi77Bull [2082618]
 // @match        https://www.torn.com/*
@@ -139,25 +139,25 @@ Refresh (h): <input id="refresh" class="shofr_input" type="text">
             setTimeout(function () {
                 $("#shofrStatus").removeClass().addClass("shofr_status");
             }, 4000);
-            displayData();
         });
     });
 
     $("#shofrDelete").on("click", function () {
         localStorage.removeItem("hofranks");
-        $(".points___KTUNl > p:not([tabindex='1'])").remove();
     });
-}
-if (hofranks) {
-    if (((new Date() - new Date(Date.parse(hofranks.date))) / 1000 / 60 / 60) >= 1) {
-        getData(function(data) {
-            hofranks.date = new Date();
-            hofranks.halloffame = data;
-            localStorage.setItem("hofranks", JSON.stringify(hofranks));
+
+} else {
+    if (hofranks) {
+        if (((new Date() - new Date(Date.parse(hofranks.date))) / 1000 / 60 / 60) >= 1) {
+            getData(function(data) {
+                hofranks.date = new Date();
+                hofranks.halloffame = data;
+                localStorage.setItem("hofranks", JSON.stringify(hofranks));
+                displayData();
+            });
+        } else {
             displayData();
-        });
-    } else {
-        displayData();
+        }
     }
 }
 
@@ -170,7 +170,6 @@ function getData(callback) {
 
 function displayData() {
     if (!$(".sidebar-block___1Cqc2").eq(0).hasClass("info___1us3U")) {
-        $(".points___KTUNl > p:not([tabindex='1'])").remove();
         for (let stat in hofranks.visiblestats) {
             $(".points___KTUNl").append(`<p class="point-block___xpMEi"><span style="font-weight: bold;">${stat.capitalize()}:</span><span style="float: right;">${hofranks.halloffame[stat].rank}</span></p>`);
         }
@@ -182,7 +181,6 @@ function displayData() {
         var callback = function(mutationsList, observer) {
             for(var mutation of mutationsList) {
                 if (mutation.attributeName == 'class') {
-                    $(".points___KTUNl > p:not([tabindex='1'])").remove();
                     for (let stat in hofranks.visiblestats) {
                         $(".points___KTUNl").append(`<p class="point-block___xpMEi"><span style="font-weight: bold;">${stat.capitalize()}:</span><span style="float: right;">${hofranks.halloffame[stat].rank}</span></p>`);
                     }
