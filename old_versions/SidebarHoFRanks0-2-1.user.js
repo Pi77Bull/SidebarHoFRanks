@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Sidebar HoF Ranks
-// @version      0.2.2
+// @version      0.2.1
 // @description  Displays all Hall of Fame Ranks in the Sidebar.
 // @author       Pi77Bull [2082618]
 // @match        https://www.torn.com/*
@@ -120,9 +120,6 @@ Refresh (h): <input id="refresh" class="shofr_input" type="text">
     }
 
     $("#shofrSave").on("click", function () {
-        hofranks = {
-            "apikey": $("#apikey").val()
-        };
         getData(function(data) {
             hofranks = {
                 "date": new Date(),
